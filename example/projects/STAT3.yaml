@@ -1,0 +1,16 @@
+assayProjectVersion: "1.0"
+meta:
+  description: |
+    Write anything about project details
+  organization: null
+stages:
+  - stageType: primary
+    assays:
+      - assayId: [STAT3_reporter, primary, lum]
+  - stageType: confirmatory
+    assays:
+      - assayId: [STAT3_reporter, retest, lum]
+      - assayId: [STAT1_reporter, counter_STAT3, lum]
+  - stageType: confirmatory
+    assays:
+      - assayId: [STAT3_reporter, dose, lum]

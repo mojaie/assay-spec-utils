@@ -1,0 +1,71 @@
+assayAttributesVersion: "1.0"
+name: Luciferase
+meta:
+  description: Luciferases
+items:
+  - attributeId: FIREFLY_LUC
+    name: Firefly luciferase
+    description: Firefly luciferase (FLuc), Steady-Glo, ADP-Glo and etc. UniProtid:P08659
+    terms:
+      - [bao:BAO_0000050, bioluminescence]
+      - [CHEBI:15379, dioxygen]
+      - [CHEBI:16526, carbon dioxide]
+      - [CHEBI:16792, oxidized Photinus luciferin]
+      - [CHEBI:18420, magnesium(2+)]
+      - [CHEBI:30616, ATP(4-)]
+      - [CHEBI:33019, diphosphate(3-)]
+      - [CHEBI:58038, Photinus luciferin(1-)]
+      - [CHEBI:456215, adenosine 5'-monophosphate(2-)]
+      - [GO:0005524, ATP binding]
+      - [GO:0046872, metal ion binding]
+      - [GO:0047077, Photinus-luciferin 4-monooxygenase (ATP-hydrolyzing) activity]
+
+  - attributeId: RENILLA_LUC
+    name: Renilla luciferase
+    description: |
+      Renilla (RLuc), Dual-Glo and etc. UniProtid:P27652.
+      Coelenterazine h is a Renilla luciferin.
+    terms:
+      - [bao:BAO_0000050, bioluminescence]
+      - [CHEBI:15379, dioxygen]
+      - [CHEBI:16526, carbon dioxide]
+      - [CHEBI:16531, Renilla luciferin]
+      - [CHEBI:138275, oxidized Renilla luciferin(1-)]
+      - [GO:0050248, Renilla-luciferin 2-monooxygenase activity]
+
+  - attributeId: GAUSSIA_LUC
+    name: Gaussia luciferase
+    description: Gaussia (GLuc)
+    terms:
+      - [bao:BAO_0000050, bioluminescence]
+      - [CHEBI:15379, dioxygen]
+      - [CHEBI:16526, carbon dioxide]
+      - [CHEBI:16531, Renilla luciferin]
+      - [CHEBI:138275, oxidized Renilla luciferin(1-)]
+      - [GO:0050248, Renilla-luciferin 2-monooxygenase activity]
+
+  - attributeId: OPLOPHORUS_LUC
+    name: Oplophorus luciferase
+    description: |
+      Oplophorus luciferase (OpLuc) e.g. NanoLuc UniProtid:Q9GV45.
+      Coelenterazine h is a Oplophorus luciferin.
+    terms:
+      - [bao:BAO_0000050, bioluminescence]
+      - [CHEBI:2311, Oplophorus luciferin]
+      - [CHEBI:15379, dioxygen]
+      - [CHEBI:16526, carbon dioxide]
+      - [CHEBI:41487, oxidized Oplophorus luciferin]
+      - [GO:0033756, Oplophorus-luciferin 2-monooxygenase activity]
+
+  - attributeId: CYPRIDINA_LUC
+    name: Cypridina luciferase
+    description: |
+      Cypridina (sea-firefly) luciferase  UniProtid:P17554.
+      Vargulin is a Cypridina luciferin.
+    terms:
+      - [bao:BAO_0000050, bioluminescence]
+      - [CHEBI:15379, dioxygen]
+      - [CHEBI:16526, carbon dioxide]
+      - [CHEBI:58006, Cypridina luciferin(1+)]
+      - [CHEBI:58059, oxidized Cypridina luciferin(1+)]
+      - [GO:0047712, Cypridina-luciferin 2-monooxygenase activity]

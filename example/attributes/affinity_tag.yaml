@@ -1,0 +1,69 @@
+assayAttributesVersion: "1.0"
+name: Affinity tags
+meta:
+  description: Affinity tags
+items:
+  - attributeId: BIOTIN_SA
+    name: Biotin - Streptavidin
+    description: biotin streptavidin affinity
+    terms:
+      - [CHEBI:15956, biotin]
+      - [MESH:D019809, Streptavidin]
+      - [GO:0009374, biotin binding]
+
+  - attributeId: HIS_NI
+    name: His - Ni2+
+    description: His tag Ni2+ affinity
+    terms:
+      - [bao:BAO_0002544, his tag]
+      - [GO:0016151, nickel cation binding]
+      - [CHEBI:49786, nickel(2+)]
+  - attributeId: HIS_AB
+    name: His - antibody
+    description: His tag antibody affinity
+    terms:
+      - [bao:BAO_0002544, his tag]
+      - [GO:0016151, nickel cation binding]
+      - [bao:BAO_0000502, antibody]
+
+  - attributeId: GST_GSH
+    name: GST - GSH
+    description:
+      UniProt id:P08515 (Schistosoma japonicum)
+      GST glutathion affinity
+    terms:
+      - [bao:BAO_0002547, GST tag]
+      - [CHEBI:57925, glutathionate(1-)]
+      - [GO:0043295, glutathione binding]
+  - attributeId: GST_AB
+    name: GST - antibody
+    description:
+      UniProt id:P08515 (Schistosoma japonicum)
+      GST antibody affinity
+    terms:
+      - [bao:BAO_0000502, antibody]
+      - [bao:BAO_0002547, GST tag]
+      - [GO:0043295, glutathione binding]
+
+  - attributeId: FLAG_AB
+    name: FLAG - antibody
+    description: FLAG tag (often called DYKDDDDK, DDK tag)
+    terms:
+      - [CHEBI:189550, FLAG peptide]
+      - [bao:BAO_0000502, antibody]
+
+  - attributeId: MBP_AB
+    name: MBP - antibody
+    description: Maltose binding protein tag
+    terms:
+      - [bao:BAO_0000502, antibody]
+      - [GO:1901982, maltose binding]
+      - [MESH:D058619, Maltose-Binding Proteins]
+
+  - attributeId: PROTEIN_A
+    name: Protein A - antibody
+    description: Staphylococcal Protein A IgG affinity
+    terms:
+      - [bao:BAO_0000502, antibody]
+      - [GO:0019864, IgG binding]
+      - [MESH:D013205, Staphylococcal Protein A]

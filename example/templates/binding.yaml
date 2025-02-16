@@ -1,0 +1,74 @@
+assayTemplatesVersion: "1.0"
+name: Binding assay
+meta:
+  description: |
+    Binding assays.
+items:
+  - templateId: HTRF_TB_D2
+    name: HTRF(Tb/d2)
+    description: |
+      HTRF Terbium donor and d2 acceptor.
+      The primary readout is the normalized signal ratio defined as signal(665nm) / signal(620nm) * 10000.
+    terms:
+      - [bao:BAO_0000002, homogeneous time resolved fluorescence]
+      - [bao:BAO_0000004, time resolved fluorescence resonance energy transfer]
+      - [CHEBI:49902, terbium(3+)]
+    parameters:
+      - [pH, equilibration, 7.4, null]
+      - [temperature, equilibration, 23, degC]
+      - [time, preincubation, 60, min]
+      - [time, equilibration, 60, min]
+      - [volume, total, 20, uL]
+    readouts:
+      - readoutId: 620nm
+        readoutType: measured
+        parameters:
+          - [wavelength, excitation, 340, nm]
+          - [wavelength, emission, 620, nm]
+      - readoutId: 665nm
+        readoutType: measured
+        parameters:
+          - [wavelength, excitation, 340, nm]
+          - [wavelength, emission, 665, nm]
+      - readoutId: ratio
+        readoutType: calculated
+
+  - templateId: ALPHASCREEN
+    name: AlphaScreen
+    description: |
+      AlphaScreen, Revvity
+    terms:
+      - [bao:BAO_0000071, luminescence method]
+      - [bao:BAO_0000130, alphascreen]
+      - [CHEBI:26689, singlet dioxygen]
+    parameters:
+      - [pH, equilibration, 7.4, null]
+      - [temperature, equilibration, 23, degC]
+      - [time, preincubation, 60, min]
+      - [time, equilibration, 60, min]
+      - [volume, total, 20, uL]
+      - [wavelength, excitation, 680, nm]
+      - [wavelength, emission, 560, nm]
+    readouts:
+      - readoutId: lum
+        readoutType: measured
+
+  - templateId: FLUOPPI_AG
+    name: Fluoppi (hAG)
+    description: |
+      Fluoppi assay (hAG, Humanized Azami-Green), MBL.
+    terms:
+      - [bao:BAO_0000452, imaging method]
+      - [bao:BAO_0000450, fluorescence microscopy]
+      - [MESH:D049452, Green Fluorescent Proteins]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 18, hour]
+      - [time, treatment, 4, hour]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+      - [wavelength, excitation, 495, nm]
+      - [wavelength, emission, 520, nm]
+    readouts:
+      - readoutId: flu
+        readoutType: measured

@@ -1,0 +1,76 @@
+assayTemplatesVersion: "1.0"
+name: Cell viability assay
+meta:
+  description: |
+    Cell viability assays.
+items:
+  - templateId: CELLTITER_GLO
+    name: CellTiter-Glo
+    description: |
+      CellTiter-Glo Luminescent Cell Viability Assay, Promega
+    attributes:
+      - FIREFLY_LUC
+    terms:
+      - [bao:BAO_0000682, CellTiter-Glo Luminescent Cell Viability Assay]
+      - [bao:BAO_0002079, ATP quantitation using luciferase]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 0, hour]
+      - [time, treatment, 18, hour]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+    readouts:
+      - readoutId: lum
+        readoutType: measured
+
+  - templateId: WST-8
+    name: WST-8
+    description: |
+      WST-8 cell viability assay. mediator 1-methoxy-PMS. 450 nm - 650 nm.
+    terms:
+      - [bao:BAO_0000070, absorbance]
+      - [bao:BAO_0000166, dehydrogenase activity determination]
+      - [CHEBI:78021, "2,3,5-triphenyltetrazolium"]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 0, hour]
+      - [time, treatment, 18, hour]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+    readouts:
+      - readoutId: 450nm
+        readoutType: measured
+        parameters:
+          - [wavelength, absorption, 450, nm]
+      - readoutId: 650nm
+        readoutType: measured
+        parameters:
+          - [wavelength, absorption, 650, nm]
+      - readoutId: diff
+        readoutType: calculated
+
+  - templateId: WST-1
+    name: WST-1
+    description: |
+      WST-1 cell viability assay. mediator 1-methoxy-PMS. 450 nm - 650 nm.
+    terms:
+      - [bao:BAO_0000070, absorbance]
+      - [bao:BAO_0000166, dehydrogenase activity determination]
+      - [CHEBI:78021, "2,3,5-triphenyltetrazolium"]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 0, hour]
+      - [time, treatment, 18, hour]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+    readouts:
+      - readoutId: 450nm
+        readoutType: measured
+        parameters:
+          - [wavelength, absorption, 450, nm]
+      - readoutId: 650nm
+        readoutType: measured
+        parameters:
+          - [wavelength, absorption, 650, nm]
+      - readoutId: diff
+        readoutType: calculated

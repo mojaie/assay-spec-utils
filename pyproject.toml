@@ -1,0 +1,19 @@
+[project]
+name = "assay-spec-utils"
+version = "0.1.0"
+description = "A Python utility for constructing structured, machine-readable assay specifications."
+authors = [
+    { name = "Seiji Matsuoka", email = "ms0ae8ti1sj2ui@gmail.com" }
+]
+dependencies = [
+    "pydantic>=2.8.2",
+    "pyyaml>=6.0.1",
+    "requests>=2.32.3",
+    "pandas>=2.2.2"
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

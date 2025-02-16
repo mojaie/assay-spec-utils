@@ -1,0 +1,56 @@
+assayProtocolVersion: "1.0"
+meta:
+  description: |
+    Cell-based STAT3 inhibitor assay from PubChem Bioassay.  
+    - AID 862 (primary screen)
+    - AID 1265 (confirmation)
+    - AID 1399 (dose)
+targets:
+  - sourceType: UniProt
+    accessionId: P40763
+    name: STAT3_HUMAN
+attributes:
+  - GENE_EXPRESSION
+  - FIREFLY_LUC
+  - DMEM
+terms:
+  - [bao:BAO_0000516, 1536 well plate]
+parameters:
+  - [temperature, treatment, 37, degC]
+  - [time, preincubation, 0, hour]
+  - [time, treatment, 7, hour]
+  - [cellcount, seeded, 7520, cells/well]
+  - [volume, total, 10, uL]
+  - [concentration, IL6, 3.3e-5, g/L]
+  - [concentration, DMSO, 0.6, v/v%]
+  - [concentration, FBS, 10, v/v%]
+readouts:
+  - readoutId: lum
+    readoutType: measured
+assays:
+  - assayId: primary
+    valueType: category
+    terms:
+      - [bao:BAO_0000031, primary assay]
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid862.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Outcome
+  - assayId: retest
+    valueType: category
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid1265.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Outcome
+  - assayId: dose
+    valueType: AC50
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid1399.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Value [uM]

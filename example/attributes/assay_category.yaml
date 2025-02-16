@@ -1,0 +1,82 @@
+assayAttributesVersion: "1.0"
+name: Assay designs
+meta:
+  description: Assay designs
+items:
+  - attributeId: ENZYME_VITRO
+    name: Enzyme (cell-free)
+    description: Cell-free enzyme assay with purified protein
+    terms:
+      - [bao:BAO_0000124, enzyme activity measurement method]
+      - [bao:BAO_0000217, biochemical format]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: ENZYME_CELL
+    name: Enzyme (live cell)
+    description: Enzyme assay with living cell
+    terms:
+      - [bao:BAO_0000124, enzyme activity measurement method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: ENZYME_OTHER
+    name: Enzyme (other format)
+    description: Enzyme assay with other format (e.g. serum, cell lysate)
+    terms:
+      - [bao:BAO_0000124, enzyme activity measurement method]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: BINDING_VITRO
+    name: Binding (cell-free)
+    description: Cell-free target-ligand binding assay with purified protein
+    terms:
+      - [bao:BAO_0000123, binding assessment method]
+      - [bao:BAO_0000217, biochemical format]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: BINDING_CELL
+    name: Binding (live cell)
+    description: Target-ligand binding assay with living cell
+    terms:
+      - [bao:BAO_0000123, binding assessment method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: BINDING_OTHER
+    name: Binding (other format)
+    description: Target-ligand binding assay with other format (e.g. serum, cell lysate)
+    terms:
+      - [bao:BAO_0000123, binding assessment method]
+      - [bao:BAO_0013016, functional target-based]
+
+  - attributeId: GENE_EXPRESSION
+    name: Gene expression - reporter assay and qPCR
+    description: Gene expression detection (e.g. reporter gene assay, qPCR)
+    terms:
+      - [bao:BAO_0003024, gene expression detection method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013017, functional phenotypic]
+
+  - attributeId: VIABILITY
+    name: Cell viability and toxicity
+    description: Cell viability and toxicity assay
+    terms:
+      - [bao:BAO_0000127, viability measurement method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013017, functional phenotypic]
+
+  - attributeId: ABUNDANCE
+    name: Molecular abundance - metabolites and gene products
+    description: Molecular abundance assay (e.g. metabolites or gene products that are not produced by a single target enzyme)
+    terms:
+      - [bao:BAO_0040011, molecular abundance method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013017, functional phenotypic]
+  
+  - attributeId: MORPHOLOGY
+    name: Cell morphology
+    description: Cell morphology assay
+    terms:
+      - [bao:BAO_0000448, morphology assessment method]
+      - [bao:BAO_0000219, cell based format]
+      - [bao:BAO_0013017, functional phenotypic]

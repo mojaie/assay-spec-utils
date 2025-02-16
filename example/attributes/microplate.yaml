@@ -1,0 +1,126 @@
+assayAttributesVersion: "1.0"
+name: Microplate
+meta:
+  description: Microplate
+items:
+  - attributeId: GREINER_781080
+    name: Greiner 781075 (384, standard, white, TC)
+    description:
+      CELL CULTURE MICROPLATE, 384 WELL, PS, F-BOTTOM, WHITE, LID, TC
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, standard, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, white, null]
+      - [string, microplate_surface, tissue culture, null]
+
+  - attributeId: GREINER_781075
+    name: Greiner 781075 (384, standard, white, med-bind)
+    description:
+      384-well, PS, F-Bottom, LUMITRAC, Med-binding, White
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, standard, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, white, null]
+      - [string, microplate_surface, med-binding, null]
+
+  - attributeId: GREINER_782900
+    name: Greiner 782900 (1536, shallow, black, low-bind)
+    description:
+      1536-well, PS, F-Bottom, HiBase, Non-binding, Black
+    terms:
+      - [bao:BAO_0000516, 1536 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, black, null]
+      - [string, microplate_surface, low-binding, null]
+
+  - attributeId: GREINER_784900
+    name: Greiner 784900 (384, shallow, black, low-bind)
+    description:
+      384-well, PS, F-Bottom, Small volume, HiBase, Non-binding, Black
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, black, null]
+      - [string, microplate_surface, low-binding, null]
+
+  - attributeId: GREINER_784904
+    name: Greiner 784904 (384, shallow, white, low-bind)
+    description:
+      384-well, PS, F-Bottom, Small volume, HiBase, Non-binding, White
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, white, null]
+      - [string, microplate_surface, low-binding, null]
+
+  - attributeId: CORNING_4512
+    name: Corning No.4512 (384, shallow, white, low-bind)
+    description: |
+      Corning 384-well low volume, non-treated, solid white plate,
+      round bottom, without lid
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, low volume round bottom, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, white, null]
+      - [string, microplate_surface, med-binding, null]
+
+  - attributeId: CORNING_4588
+    name: Corning No.4588 (384, standard, black clear bottom, low attachment)
+    description: |
+      Corning 384-well, black with clear bottom plate, low flange,
+      ultra-low attachment, with lid
+      Formerly Corning No.3827
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, standard, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, black clear bottom, null]
+      - [string, microplate_surface, low attatchment, null]
+
+  - attributeId: ALPHA_384_SW
+    name: AlphaPlate 384-SW (384, shallow, light gray, med-bind)
+    description:
+      AlphaPlate 384-shallow well (ProxiPlate) Cat.No. 6008350, 6008359
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, light gray, null]
+      - [string, microplate_surface, med-binding, null]
+
+  - attributeId: PROXIPLATE_384_PLUS
+    name: ProxiPlate 384-SW Plus (384, shallow, white, med-bind)
+    description: |
+      ProxiPlate 384-shallow well Cat.No. 6008280, 6008289
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, white, null]
+      - [string, microplate_surface, med-binding, null]
+
+  - attributeId: NUNC_242757
+    name: Nunc 242757 (384, standard, clear)
+    description: |
+      Nunc 384-Well, Non-Treated, Flat-Bottom Microplate
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, standard, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, clear, null]

@@ -1,0 +1,36 @@
+assayProtocolVersion: "1.0"
+meta:
+  description: |
+    Cell-based STAT1 inhibitor assay from PubChem Bioassay.  
+    - AID 1317 (STAT3 counter assay, STAT1)
+targets:
+  - sourceType: UniProt
+    accessionId: P42224
+    name: STAT1_HUMAN
+attributes:
+  - GENE_EXPRESSION
+  - FIREFLY_LUC
+  - DMEM
+terms:
+  - [bao:BAO_0000516, 1536 well plate]
+parameters:
+  - [temperature, treatment, 37, degC]
+  - [time, preincubation, 0, hour]
+  - [time, treatment, 5, hour]
+  - [cellcount, seeded, 7520, cells/well]
+  - [volume, total, 10, uL]
+  - [concentration, IFNG, 3.0e-6, g/L]
+  - [concentration, DMSO, 0.6, v/v%]
+  - [concentration, FBS, 10, v/v%]
+readouts:
+  - readoutId: lum
+    readoutType: measured
+assays:
+  - assayId: counter_STAT3
+    valueType: category
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid1317.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Outcome

@@ -1,0 +1,65 @@
+assayProtocolVersion: "1.0"
+meta:
+  description: |
+    Keap1 Nrf2 fluorescence polarization assay from PubChem Bioassay.  
+    - AID 504523 (primary screen)
+    - AID 588683 (dose response)
+    - AID 651798 (dose response, dry powder set 1)
+targets:
+  - sourceType: UniProt
+    accessionId: Q14145
+    name: KEAP1_HUMAN
+  - sourceType: UniProt
+    accessionId: Q16236
+    name: NF2L2_HUMAN
+attributes:
+  - BINDING_VITRO
+terms:
+  - [bao:BAO_0000003, fluorescence polarization]
+  - [bao:BAO_0000516, 1536 well plate]
+  - [CHEBI:37929, xanthene dye]
+parameters:
+  - [pH, equilibration, 7.4, null]
+  - [temperature, equilibration, 25, degC]
+  - [time, preincubation, 10, min]
+  - [time, equilibration, 60, min]
+  - [volume, total, 8, uL]
+  - [concentration, Q14145, 100, nM]
+  - [concentration, Q16236, 10, nM]
+  - [concentration, HEPES, 10, mM]
+  - [concentration, NaCl, 150, mM]
+  - [concentration, EDTA, 3.4, mM]
+  - [concentration, TWEEN20, 0.005, v/v%]
+readouts:
+  - readoutId: flu
+    readoutType: measured
+    parameters:
+      - [wavelength, excitation, 480, nm]
+      - [wavelength, emission, 535, nm]
+assays:
+  - assayId: primary
+    valueType: category
+    terms:
+      - [bao:BAO_0000031, primary assay]
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid504523.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Outcome
+  - assayId: dose
+    valueType: AC50
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid588683.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Value [uM]
+  - assayId: dose_powder1
+    valueType: AC50
+    datasources:
+      - sourceType: CSV
+        sourcePath: pubchem/aid651798.csv
+        sampleIdColumn: CID
+        valueColumns:
+          - Activity Value [uM]

@@ -1,0 +1,49 @@
+assayTemplatesVersion: "1.0"
+name: Reporter gene assay
+meta:
+  description: |
+    Reporter gene assays.
+items:
+  - templateId: STEADY_GLO
+    name: Steady-Glo
+    description:
+      Steady-Glo, Promega
+    attributes:
+      - FIREFLY_LUC
+    terms:
+      - [bao:BAO_0000152, luciferase induction]
+      - [bao:BAO_0000298, Steady-Glo Luciferase Assay System]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 18, hour]
+      - [time, treatment, 5, hour]
+      - [time, post-processing, 10, min]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+    readouts:
+      - readoutId: lum
+        readoutType: measured
+
+  - templateId: DUAL_GLO
+    name: Dual-Glo
+    description: |
+      Dual-Glo Dual-Luciferase Reporter Assay, Promega
+    terms:
+      - [bao:BAO_0000152, luciferase induction]
+      - [bao:BAO_0000680, Dual-Luciferase Reporter Assay System]
+    parameters:
+      - [temperature, treatment, 37, degC]
+      - [time, preincubation, 18, hour]
+      - [time, treatment, 5, hour]
+      - [time, post-processing, 10, min]
+      - [cellcount, seeded, 4000, cells/well]
+      - [volume, total, 80, uL]
+    readouts:
+      - readoutId: fluc
+        readoutType: measured
+        attributes:
+          - FIREFLY_LUC
+      - readoutId: rluc
+        readoutType: measured
+        attributes:
+          - RENILLA_LUC

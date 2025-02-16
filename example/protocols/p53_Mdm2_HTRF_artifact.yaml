@@ -1,0 +1,35 @@
+assayProtocolVersion: "1.0"
+meta:
+  description: |
+    artifact assay of p53-Mdm2 HTRF assay.
+    His-GST was used instead of p53-GST and His-Mdm2.
+templateId: HTRF_TB_D2
+attributes:
+  - HIS_AB
+  - GST_AB
+  - GREINER_784076
+terms:
+  - [bao:BAO_0000502, antibody]
+parameters:
+  - [pH, equilibration, 7.5, null]
+  - [temperature, equilibration, 23, degC]
+  - [time, preincubation, 60, min]
+  - [time, equilibration, 60, min]
+  - [volume, total, 20, uL]
+  - [concentration, His-GST, 200, nM]
+  - [concentration, NaCl, 150, mM]
+  - [concentration, DTT, 1, mM]
+  - [concentration, BSA, 0.1, g/L]
+  - [concentration, TWEEN20, 0.005, v/v%]
+  - [concentration, anti-GST_Ab, 5.0e-5, ratio]
+assays:
+  - assayId: dose
+    valueType: AC50
+    datasources:
+      - sourceType: CSV
+        sourcePath: datastore/240811_p53_Mdm2_artifact.csv
+        sampleIdColumn: compound_id
+        valueColumns:
+          - null
+          - null
+          - "IC50 (uM)"

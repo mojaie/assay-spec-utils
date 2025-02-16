@@ -1,0 +1,40 @@
+assayAttributesVersion: "1.0"
+name: Reagent
+meta:
+  description: Reagents and mediums
+items:
+  - attributeId: PBS
+    name: PBS
+    description:
+      Phosphate-buffered saline (Cold Spring Harbor Protocol)
+    parameters:
+      - [concentration, NaCl, 137, mM]
+      - [concentration, Na2HPO4, 10, mM]
+      - [concentration, KCl, 2.7, mM]
+      - [concentration, KH2PO4, 1.8, mM]
+
+  - attributeId: DMEM
+    name: DMEM
+    description:
+      Dulbecco's Modified Eagle Medium
+    parameters:
+      - [concentration, NaCl, 110, mM]
+      - [concentration, KCl, 5.3, mM]
+      - [concentration, NaHCO3, 44, mM]
+      - [concentration, CaCl2, 1.8, mM]
+      - [concentration, Gln, 4, mM]
+      - [concentration, Glucose, 5.6, mM]
+
+  - attributeId: RPMI_1640
+    name: RPMI 1640
+    description:
+      RPMI 1640 medium
+    parameters:
+      - [concentration, NaCl, 103, mM]
+      - [concentration, KCl, 5.3, mM]
+      - [concentration, NaHCO3, 24, mM]
+      - [concentration, Na2HPO4, 5.6, mM]
+      - [concentration, CaCl2, 1.8, mM]
+      - [concentration, Gln, 2.1, mM]
+      - [concentration, Arg, 1.1, mM]
+      - [concentration, Glucose, 11, mM]

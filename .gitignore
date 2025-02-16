@@ -1,0 +1,18 @@
+
+# python generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Rye venv
+.venv
+uv.lock
+
+# MacOS
+.DS_Store
+
+# Tests
+.pytest_cache
