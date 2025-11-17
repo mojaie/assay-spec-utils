@@ -8,9 +8,9 @@ import pandas as pd
 import streamlit as st
 import yaml
 
-from assayspec.model import AssayTemplates, AssayAttributes, AssayProtocol
-from assayspec.parser import parse_spec_file
-from assayspec.util import is_convertible_to_int, is_convertible_to_float
+from assay_spec_utils.model import AssayTemplates, AssayAttributes, AssayProtocol
+from assay_spec_utils.parser import parse_spec_file
+from assay_spec_utils.util import is_convertible_to_int, is_convertible_to_float
 
 
 # Variables

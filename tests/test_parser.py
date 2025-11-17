@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
-from assayspec.parser import *
-from assayspec.parser import _resolve_attributes
+from assay_spec_utils.parser import *
+from assay_spec_utils.parser import _resolve_attributes
 BASE_DIR = Path("./example")
 
 

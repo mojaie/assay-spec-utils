@@ -5,7 +5,7 @@ import json
 import logging
 from pathlib import Path
 
-from assayspec.parser import *
+from assay_spec_utils.parser import *
 
 logger = logging.getLogger(__name__)
 

@@ -5,8 +5,8 @@ import pickle
 import re
 import yaml
 
-from assayspec.datasource import uniprot_target_terms
-from assayspec.model import AssayProtocol, AssayTemplates, AssayAttributes, AssaySpec
+from assay_spec_utils.datasource import uniprot_target_terms
+from assay_spec_utils.model import AssayProtocol, AssayTemplates, AssayAttributes, AssaySpec
 
 __all__ = [
     "parse_spec",
