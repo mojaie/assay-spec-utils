@@ -15,8 +15,14 @@ class DataSourceType(str, Enum):
 
 
 class ReadoutType(str, Enum):
-    measured = 'measured'
-    calculated = 'calculated'
+    effect = 'effect'
+    raw = 'raw'
+    background = 'raw'
+
+
+class ReadoutMode(str, Enum):
+    inhibition = 'inhibition'
+    activation = 'activation'
 
 
 class ValueType(str, Enum):
@@ -46,7 +52,9 @@ class Attribute(BaseModel, extra='forbid'):
 
 class Readout(BaseModel, extra='forbid', use_enum_values=True):
     readoutId: str
-    readoutType: ReadoutType = ReadoutType.measured
+    readoutType: ReadoutType = ReadoutType.effect
+    readoutMode: ReadoutMode = ReadoutMode.inhibition
+    readoutRange: Optional[Tuple[float,float]] = (0, 100)
     targets: list[Target] = []
     attributes: list[str] = []
     terms: list[Tuple[str, str]] = []
