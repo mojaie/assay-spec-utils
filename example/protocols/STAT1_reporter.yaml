@@ -4,8 +4,7 @@ meta:
     Cell-based STAT1 inhibitor assay from PubChem Bioassay.  
     - AID 1317 (STAT3 counter assay, STAT1)
 targets:
-  - sourceType: UniProt
-    accessionId: P42224
+  - accessionId: P42224
     name: STAT1_HUMAN
 attributes:
   - GENE_EXPRESSION
@@ -24,7 +23,8 @@ parameters:
   - [concentration, FBS, 10, v/v%]
 readouts:
   - readoutId: lum
-    readoutType: measured
+    attributes:
+      - PRIMARY_READOUT
 assays:
   - assayId: counter_STAT3
     valueType: category

@@ -14,24 +14,29 @@ items:
       - [bao:BAO_0000004, time resolved fluorescence resonance energy transfer]
       - [CHEBI:49902, terbium(3+)]
     parameters:
-      - [pH, equilibration, 7.4, null]
       - [temperature, equilibration, 23, degC]
       - [time, preincubation, 60, min]
       - [time, equilibration, 60, min]
       - [volume, total, 20, uL]
+      - [pH, equilibration, 7.4, null]
     readouts:
       - readoutId: 620nm
-        readoutType: measured
+        readoutRange: [100, 0]
+        attributes:
+          - HTRF_DONOR_READOUT
         parameters:
           - [wavelength, excitation, 340, nm]
           - [wavelength, emission, 620, nm]
       - readoutId: 665nm
-        readoutType: measured
+        readoutRange: [100, 0]
+        attributes:
+          - HTRF_ACCEPTOR_READOUT
         parameters:
           - [wavelength, excitation, 340, nm]
           - [wavelength, emission, 665, nm]
       - readoutId: ratio
-        readoutType: calculated
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: ALPHASCREEN
     name: AlphaScreen
@@ -42,16 +47,18 @@ items:
       - [bao:BAO_0000130, alphascreen]
       - [CHEBI:26689, singlet dioxygen]
     parameters:
-      - [pH, equilibration, 7.4, null]
       - [temperature, equilibration, 23, degC]
       - [time, preincubation, 60, min]
       - [time, equilibration, 60, min]
       - [volume, total, 20, uL]
       - [wavelength, excitation, 680, nm]
       - [wavelength, emission, 560, nm]
+      - [pH, equilibration, 7.4, null]
     readouts:
       - readoutId: lum
-        readoutType: measured
+        attributes:
+          - PRIMARY_READOUT
+
 
   - templateId: FLUOPPI_AG
     name: Fluoppi (hAG)
@@ -71,4 +78,5 @@ items:
       - [wavelength, emission, 520, nm]
     readouts:
       - readoutId: flu
-        readoutType: measured
+        attributes:
+          - PRIMARY_READOUT

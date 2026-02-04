@@ -1,3 +1,6 @@
+
+# Example of assay metadata input form (Streamlit web application)
+
 from io import StringIO
 from pathlib import Path
 import re

@@ -30,6 +30,6 @@ assays:
         sourcePath: datastore/240811_p53_Mdm2_artifact.csv
         sampleIdColumn: compound_id
         valueColumns:
-          - null
-          - null
+          - null  # readouts[0] in the template (donor signal)
+          - null  # readouts[1] in the template (acceptor signal)
           - "IC50 (uM)"

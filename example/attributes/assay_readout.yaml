@@ -1,0 +1,48 @@
+assayAttributesVersion: "1.0"
+name: Assay readouts
+meta:
+  description: Assay readouts
+items:
+  - attributeId: PRIMARY_READOUT
+    name: Primary readout
+    description: Primary readout of the assay.
+
+  - attributeId: REFERENCE_READOUT
+    name: Reference readout
+    description: Reference readout of the assay.
+
+  - attributeId: REFERENCE_TIME_READOUT
+    name: Reference time readout
+    description: Reference time readout (typically 0 min) for kinetics assays
+
+  - attributeId: REFERENCE_WAVELENGTH_READOUT
+    name: Reference wavelength readout
+    description: Reference wavelength signal used for the correction of optical interferences
+
+  - attributeId: REFERENCE_REPORTER_READOUT
+    name: Reference reporter readout
+    description: Reference reporter readout used for the correction of gene expression and cell viability.
+
+  - attributeId: REFERENCE_CELL_LINE_READOUT
+    name: Reference cell line readout
+    description: Reference cell line readout.
+
+  - attributeId: HTRF_DONOR_READOUT
+    name: HTRF donor readout
+    description: HTRF donor readout.
+
+  - attributeId: HTRF_ACCEPTOR_READOUT
+    name: HTRF acceptor readout
+    description: HTRF acceptor readout.
+
+  - attributeId: BRET_DONOR_READOUT
+    name: BRET donor readout
+    description: BRET donor readout.
+
+  - attributeId: BRET_ACCEPTOR_READOUT
+    name: BRET acceptor readout
+    description: BRET acceptor readout.
+
+  - attributeId: SIGNAL_QUALITY_METRIC
+    name: Signal quality metric
+    description: Signal quality metric (e.g. aggregation flag, fluorescence anomaly flag)

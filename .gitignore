@@ -7,7 +7,7 @@ dist/
 wheels/
 *.egg-info
 
-# Rye venv
+# uv
 .venv
 uv.lock
 
@@ -16,3 +16,6 @@ uv.lock
 
 # Tests
 .pytest_cache
+
+# example test
+example/dest

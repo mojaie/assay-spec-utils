@@ -4,11 +4,9 @@ meta:
     p53-GST, His-Mdm2 (1-118 a.a)
 templateId: HTRF_TB_D2
 targets:
-  - sourceType: UniProt
-    accessionId: P04637
+  - accessionId: P04637
     name: P53_HUMAN
-  - sourceType: UniProt
-    accessionId: Q00987
+  - accessionId: Q00987
     name: MDM2_HUMAN
 attributes:
   - HIS_AB
@@ -31,17 +29,17 @@ parameters:
   - [concentration, TWEEN20, 0.005, v/v%]
   - [concentration, anti-GST_Ab, 5.0e-5, ratio]
 assays:
-  - assayId: primary
-    valueType: percentage
-    terms:
-      - [bao:BAO_0000031, primary assay]
-    datasources:
-      - sourceType: Screener
-        sessionId: AS-0001
-        layerIndices: [1, 2, 0]
-      - sourceType: Screener
-        sessionId: AS-0002
-        layerIndices: [1, 2, 0]
+  # - assayId: primary
+  #   valueType: percentage
+  #   terms:
+  #     - [bao:BAO_0000031, primary assay]
+  #   datasources:
+  #     - sourceType: Screener
+  #       sessionId: AS-0001
+  #       layerIndices: [1, 2, 0]
+  #     - sourceType: Screener
+  #       sessionId: AS-0002
+  #       layerIndices: [1, 2, 0]
   - assayId: dose
     valueType: AC50
     datasources:
@@ -49,6 +47,6 @@ assays:
         sourcePath: datastore/240810_p53_Mdm2.csv
         sampleIdColumn: compound_id
         valueColumns:
-          - null
-          - null
+          - null  # readouts[0] in the template (donor signal)
+          - null  # readouts[1] in the template (acceptor signal)
           - "IC50 (uM)"

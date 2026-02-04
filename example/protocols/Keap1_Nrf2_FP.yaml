@@ -6,11 +6,9 @@ meta:
     - AID 588683 (dose response)
     - AID 651798 (dose response, dry powder set 1)
 targets:
-  - sourceType: UniProt
-    accessionId: Q14145
+  - accessionId: Q14145
     name: KEAP1_HUMAN
-  - sourceType: UniProt
-    accessionId: Q16236
+  - accessionId: Q16236
     name: NF2L2_HUMAN
 attributes:
   - BINDING_VITRO
@@ -32,7 +30,8 @@ parameters:
   - [concentration, TWEEN20, 0.005, v/v%]
 readouts:
   - readoutId: flu
-    readoutType: measured
+    attributes:
+      - PRIMARY_READOUT
     parameters:
       - [wavelength, excitation, 480, nm]
       - [wavelength, emission, 535, nm]

@@ -12,22 +12,24 @@ items:
       - [bao:BAO_0000363, fluorescence intensity]
       - [CHEBI:51771, coumarin 120]
     parameters:
-      - [pH, reaction, 7.4, null]
       - [temperature, reaction, 23, degC]
-      - [time, preincubation, 10, min]
       - [time, reaction, 30, min]
       - [volume, total, 20, uL]
       - [wavelength, excitation, 380, nm]
       - [wavelength, emission, 460, nm]
+      - [pH, reaction, 7.4, null]
     readouts:
       - readoutId: 0min
-        readoutType: measured
+        readoutRange: [100, 0]
+        attributes:
+          - REFERENCE_TIME_READOUT
         parameters:
           - [time, reaction, 0, min]
       - readoutId: endpoint
-        readoutType: measured
+        readoutRange: [100, 0]
       - readoutId: diff
-        readoutType: calculated
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: FAM_FRET_SUBSTRATE
     name: FRET (Quenched FAM substrate)
@@ -37,22 +39,24 @@ items:
       - [bao:BAO_0000001, fluorescence resonance energy transfer]
       - [CHEBI:37929, xanthene dye]
     parameters:
-      - [pH, reaction, 7.4, null]
       - [temperature, reaction, 23, degC]
-      - [time, preincubation, 10, min]
       - [time, reaction, 30, min]
       - [volume, total, 20, uL]
       - [wavelength, excitation, 495, nm]
       - [wavelength, emission, 520, nm]
+      - [pH, reaction, 7.4, null]
     readouts:
       - readoutId: 0min
-        readoutType: measured
+        readoutRange: [100, 0]
+        attributes:
+          - REFERENCE_TIME_READOUT
         parameters:
           - [time, reaction, 0, min]
       - readoutId: endpoint
-        readoutType: measured
+        readoutRange: [100, 0]
       - readoutId: diff
-        readoutType: calculated
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: AMPLEX_RED
     name: Amplex Red
@@ -66,23 +70,26 @@ items:
       - [CHEBI:51602, resorufin]
       - [MESH:D006735, Horseradish Peroxidase]
     parameters:
-      - [pH, reaction, 7.4, null]
       - [temperature, reaction, 23, degC]
-      - [time, preincubation, 10, min]
       - [time, reaction, 30, min]
       - [time, post-processing, 30, min]
+      - [volume, reaction, 10, uL]
       - [volume, total, 20, uL]
       - [wavelength, excitation, 570, nm]
       - [wavelength, emission, 585, nm]
+      - [pH, reaction, 7.4, null]
     readouts:
       - readoutId: 0min
-        readoutType: measured
+        readoutRange: [100, 0]
+        attributes:
+          - REFERENCE_TIME_READOUT
         parameters:
           - [time, reaction, 0, min]
       - readoutId: endpoint
-        readoutType: measured
+        readoutRange: [100, 0]
       - readoutId: diff
-        readoutType: calculated
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: CYTOPHOS
     name: CytoPhos
@@ -92,15 +99,17 @@ items:
       - [bao:BAO_0000070, absorbance]
       - [CHEBI:72449, malachite green]
     parameters:
-      - [pH, reaction, 7.4, null]
       - [temperature, reaction, 23, degC]
-      - [time, preincubation, 10, min]
       - [time, reaction, 30, min]
+      - [time, post-processing, 10, min]
+      - [volume, reaction, 10, uL]
       - [volume, total, 20, uL]
       - [wavelength, absorption, 650, nm]
+      - [pH, reaction, 7.4, null]
     readouts:
       - readoutId: abs
-        readoutType: measured
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: ADP_GLO
     name: ADP-Glo
@@ -112,12 +121,13 @@ items:
       - [bao:BAO_0000124, enzyme activity measurement method]
       - [bao:BAO_0000690, ADP Glo Kinase Assay]
     parameters:
-      - [pH, reaction, 7.4, null]
       - [temperature, reaction, 23, degC]
-      - [time, preincubation, 10, min]
       - [time, reaction, 30, min]
       - [time, post-processing, 30, min]
+      - [volume, reaction, 10, uL]
       - [volume, total, 20, uL]
+      - [pH, reaction, 7.4, null]
     readouts:
       - readoutId: lum
-        readoutType: measured
+        attributes:
+          - PRIMARY_READOUT

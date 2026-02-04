@@ -1,18 +1,21 @@
 assayProjectVersion: "1.0"
 meta:
   description: |
-    Write anything about project details
+    Write anything about project details.
+    Add fields for project statistics and management (e.g. project term, category, assignee, organization, ...)
   organization: null
 stages:
   - stageType: primary
     assays:
-      - datasetId: [p53_Mdm2_HTRF, primary, ratio]
-      - datasetId: [p53_Mdm2_HTRF, primary, 620nm]
+      - readout: [p53_Mdm2_HTRF, primary, ratio]
+      - readout: [p53_Mdm2_HTRF, primary, 620nm]
+    description: |
+      e.g. Hit criteria, decision process and comments
   - stageType: confirmatory
     assays:
-      - datasetId: [p53_Mdm2_HTRF, retest, ratio]
-      - datasetId: [p53_Mdm2_HTRF, retest, 620nm]
+      - readout: [p53_Mdm2_HTRF, retest, ratio]
+      - readout: [p53_Mdm2_HTRF, retest, 620nm]
   - stageType: confirmatory
     assays:
-      - datasetId: [p53_Mdm2_HTRF, dose, ratio]
-      - datasetId: [p53_Mdm2_HTRF_artifact, dose, ratio]
+      - readout: [p53_Mdm2_HTRF, dose, ratio]
+      - readout: [p53_Mdm2_HTRF_artifact, dose, ratio]

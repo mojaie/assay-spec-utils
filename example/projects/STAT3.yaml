@@ -2,15 +2,18 @@ assayProjectVersion: "1.0"
 meta:
   description: |
     Write anything about project details
+    Add fields for project statistics and management (e.g. project term, category, assignee, organization, ...)
   organization: null
 stages:
   - stageType: primary
     assays:
-      - assayId: [STAT3_reporter, primary, lum]
+      - readout: [STAT3_reporter, primary, lum]
+    description: |
+      e.g. Hit criteria, decision process and comments
   - stageType: confirmatory
     assays:
-      - assayId: [STAT3_reporter, retest, lum]
-      - assayId: [STAT1_reporter, counter_STAT3, lum]
+      - readout: [STAT3_reporter, retest, lum]
+      - readout: [STAT1_reporter, counter_STAT3, lum]
   - stageType: confirmatory
     assays:
-      - assayId: [STAT3_reporter, dose, lum]
+      - readout: [STAT3_reporter, dose, lum]

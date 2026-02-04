@@ -2,7 +2,7 @@
 from enum import Enum
 from typing import Optional, Dict, Tuple, Any
 
-from pydantic import BaseModel, Field, Extra, model_validator
+from pydantic import BaseModel, model_validator
 
 
 class TargetSourceType(str, Enum):
@@ -12,12 +12,6 @@ class TargetSourceType(str, Enum):
 class DataSourceType(str, Enum):
     screener = 'Screener'
     csv = 'CSV'
-
-
-class ReadoutType(str, Enum):
-    effect = 'effect'
-    raw = 'raw'
-    background = 'raw'
 
 
 class ReadoutMode(str, Enum):
@@ -52,7 +46,6 @@ class Attribute(BaseModel, extra='forbid'):
 
 class Readout(BaseModel, extra='forbid', use_enum_values=True):
     readoutId: str
-    readoutType: ReadoutType = ReadoutType.effect
     readoutMode: ReadoutMode = ReadoutMode.inhibition
     readoutRange: Optional[Tuple[float,float]] = (0, 100)
     targets: list[Target] = []
@@ -166,7 +159,8 @@ class AssaySpec(BaseModel, extra='forbid', use_enum_values=True):
     protocolId: str  
     assayId: str
     readoutId: str
-    readoutType: ReadoutType = ReadoutType.measured
+    readoutMode: ReadoutMode = ReadoutMode.inhibition
+    readoutRange: Optional[Tuple[float,float]] = (0, 100)
     valueType: ValueType = ValueType.ac50
     targets: list[Target] = []
     terms: list[str] = []

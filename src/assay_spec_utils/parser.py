@@ -2,7 +2,7 @@
 import logging
 from pathlib import Path
 import pickle
-import re
+
 import yaml
 
 from assay_spec_utils.datasource import uniprot_target_terms
@@ -20,6 +20,8 @@ __all__ = [
 ]
 
 logger = logging.getLogger(__name__)
+
+ATTRIBUTE_TERM_PREFIX = "attr:"
 
 
 def parse_spec(spec, validator, **kwargs):
@@ -131,7 +133,7 @@ def _resolve_attributes(spec, gattrs) -> None:
         attr = gattrs[attrid]
         # Should be unique and sorted later
         atms = [t[0] for t in attr["terms"]]
-        spec["terms"] = [*spec["terms"], *atms]
+        spec["terms"] = [*spec["terms"], *atms, f"{ATTRIBUTE_TERM_PREFIX}{attrid}"]
         spec["parameters"] = [*spec["parameters"], *attr["parameters"]]
 
 
@@ -187,19 +189,14 @@ def generate_assays(
             # Resolve targets
             if ro["targets"]:
                 sp["targets"] = ro["targets"]
-            for tg in sp["targets"]:
-                tt = target_term[tg["accessionId"]]
-                sp["terms"].extend(tt["Function"])
-                sp["terms"].extend(tt["Process"])
-                sp["terms"].extend(tt["Component"])
-                sp["terms"].extend(tt["ChEBI"])
 
             # Override by readout-level fields
             _resolve_attributes(ro, attributes)
             sp["terms"].extend(ro["terms"])
             sp["parameters"].extend(ro["parameters"])
             sp["readoutId"] = ro["readoutId"]
-            sp["readoutType"] = ro["readoutType"]
+            sp["readoutMode"] = ro["readoutMode"]
+            sp["readoutRange"] = ro["readoutRange"]
 
             # Assays
             for assay in protocol["assays"]:

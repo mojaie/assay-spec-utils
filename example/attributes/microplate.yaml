@@ -39,6 +39,18 @@ items:
       - [string, microplate_color, black, null]
       - [string, microplate_surface, low-binding, null]
 
+  - attributeId: GREINER_784076
+    name: Greiner 784076 (384, shallow, black, med-bind)
+    description: |
+      384-well, PS, F-Bottom, Small volume, HiBase, Med-binding, Black
+    terms:
+      - [bao:BAO_0000515, 384 well plate]
+    parameters:
+      - [string, microplate_shape, shallow well, null]
+      - [string, microplate_material, PS, null]
+      - [string, microplate_color, black, null]
+      - [string, microplate_surface, med-binding, null]
+
   - attributeId: GREINER_784900
     name: Greiner 784900 (384, shallow, black, low-bind)
     description:

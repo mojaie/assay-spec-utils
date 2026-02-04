@@ -65,7 +65,7 @@ def chebi_name(obo_id: str) -> str:
 
 
 def pubchem_assay(aid: str):
-    query = f"{PUB_BASE_URL}/assay/aid/{aid}/concise/CSV"
+    query = f"{PUG_BASE_URL}/assay/aid/{aid}/concise/CSV"
     res = requests.get(query).json()
     return res["label"]
 

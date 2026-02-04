@@ -6,8 +6,7 @@ meta:
     - AID 1265 (confirmation)
     - AID 1399 (dose)
 targets:
-  - sourceType: UniProt
-    accessionId: P40763
+  - accessionId: P40763
     name: STAT3_HUMAN
 attributes:
   - GENE_EXPRESSION
@@ -26,7 +25,8 @@ parameters:
   - [concentration, FBS, 10, v/v%]
 readouts:
   - readoutId: lum
-    readoutType: measured
+    attributes:
+      - PRIMARY_READOUT
 assays:
   - assayId: primary
     valueType: category

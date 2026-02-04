@@ -22,7 +22,8 @@ items:
       - [volume, total, 80, uL]
     readouts:
       - readoutId: lum
-        readoutType: measured
+        attributes:
+          - PRIMARY_READOUT
 
   - templateId: DUAL_GLO
     name: Dual-Glo
@@ -40,10 +41,10 @@ items:
       - [volume, total, 80, uL]
     readouts:
       - readoutId: fluc
-        readoutType: measured
         attributes:
           - FIREFLY_LUC
+          - PRIMARY_READOUT
       - readoutId: rluc
-        readoutType: measured
         attributes:
           - RENILLA_LUC
+          - REFERENCE_REPORTER_READOUT
