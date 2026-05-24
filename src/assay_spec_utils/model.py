@@ -150,13 +150,20 @@ class AssaySpecData(BaseModel, extra='forbid', use_enum_values=True):
     sampleMapping: Optional[str] = None
 
 
+class ProtocolSpec(BaseModel, extra='forbid', use_enum_values=True):
+    """Protocol specification for assay design statistics.
+    """
+    protocolId: str
+    terms: list[str] = []
+
+
 class AssaySpec(BaseModel, extra='forbid', use_enum_values=True):
     """Assay specification for data analysis.
 
     Assays may have a datasetId like protocolId(_assayId)(_readoutId).
     Activity values will be retrieved according to Assay.datasources field.
     """
-    protocolId: str  
+    protocolId: str
     assayId: str
     readoutId: str
     readoutMode: ReadoutMode = ReadoutMode.inhibition

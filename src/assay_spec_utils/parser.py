@@ -6,8 +6,7 @@ import pickle
 import yaml
 
 from assay_spec_utils.datasource import uniprot_target_terms
-from assay_spec_utils.model import AssayProtocol, AssayTemplates, AssayAttributes, AssaySpec
-
+from assay_spec_utils.model import AssayProtocol, AssayTemplates, AssayAttributes, AssaySpec, ProtocolSpec
 __all__ = [
     "parse_spec",
     "parse_spec_file",
@@ -16,6 +15,7 @@ __all__ = [
     "load_attributes",
     "fetch_target_terms",
     "generate_term_dict",
+    "generate_protocols",
     "generate_assays"
 ]
 
@@ -137,6 +137,38 @@ def _resolve_attributes(spec, gattrs) -> None:
         spec["parameters"] = [*spec["parameters"], *attr["parameters"]]
 
 
+def generate_protocols(
+        protocols: list, templates: dict, attributes: dict):
+    """Generate protocol metadata (for assay design statistics).
+    """
+    rcds = []
+    templates_resolved = {}
+    for protocol in protocols:
+        logger.info(f"Protocol: {protocol['protocolId']}")
+        # Apply template
+        tmpl_id = protocol["templateId"]
+        if tmpl_id is None:
+            spec = { "terms": [] }
+        else:
+            if tmpl_id not in templates_resolved:
+                tmpl = templates[tmpl_id]
+                _resolve_attributes(tmpl, attributes)
+                templates_resolved[tmpl_id] = {
+                    "terms": tmpl["terms"]
+                }
+            spec = pickle.loads(pickle.dumps(templates_resolved[tmpl_id]))
+            spec["terms"].append(f"{ATTRIBUTE_TERM_PREFIX}{tmpl_id}")
+        # Override by protocol-level fields
+        _resolve_attributes(protocol, attributes)
+        spec["terms"].extend(protocol["terms"])
+        spec["protocolId"] = protocol["protocolId"]
+        # Validation
+        s = parse_spec(spec, ProtocolSpec)
+        rcds.append(s)
+    logger.info("Done.")
+    return rcds
+
+
 def generate_assays(
         protocols: list, templates: dict,
         attributes: dict, target_term: dict) -> list:
@@ -168,6 +200,7 @@ def generate_assays(
                 }
                 templates_readouts[tmpl_id] = tmpl["readouts"]
             spec = pickle.loads(pickle.dumps(templates_resolved[tmpl_id]))
+            spec["terms"].append(f"{ATTRIBUTE_TERM_PREFIX}{tmpl_id}")
             readouts = pickle.loads(pickle.dumps(templates_readouts[tmpl_id]))
 
         # Override by protocol-level fields
