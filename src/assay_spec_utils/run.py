@@ -6,58 +6,109 @@ import logging
 from pathlib import Path
 
 from assay_spec_utils.parser import *
+from assay_spec_utils.datasource import *
 
+__all__ = [
+    "fetch_target_info",
+    "process_all"
+]
 logger = logging.getLogger(__name__)
 
-PROTOCOLS_DIR = "protocols"
-TEMPLATES_DIR = "templates"
-ATTRIBUTES_DIR = "attributes"
-TARGET_FILE = "targets.json.gz"
-ASSAY_FILE = "assays.json.gz"
+
+def _fetch_targets(
+            spec: dict, dest_uniprot_dir: Path, dest_chebi_dir: Path,
+            force_update=False
+        ) -> None:
+    for target in spec["targets"]:
+        aid = target["accessionId"]
+        dest_uniprot_file = dest_uniprot_dir / f"{aid}.json"
+        if dest_uniprot_file.exists() and not force_update:
+            continue
+        uj = fetch_uniprot_json(aid)
+        if uj["entryType"] != "UniProtKB reviewed (Swiss-Prot)":
+            logger.warning(f"Skipped {aid}: invalid entryType {uj["entryType"]}")
+            continue
+        with open(dest_uniprot_file, "wt", encoding='UTF-8') as f:
+            json.dump(uj, f, indent=2)
+        cterms = uniprot_chebi_terms(uj)
+        for ct in cterms:
+            dest_chebi_file = dest_chebi_dir / f"{ct.split(":")[1]}.json"
+            if dest_chebi_file.exists() and not force_update:
+                continue
+            cj = fetch_chebi_json(ct)
+            with open(dest_chebi_file, "wt", encoding='UTF-8') as f:
+                json.dump(cj, f, indent=2)
 
 
-def process_all(src_dir: Path, dest_dir: Path):
+def fetch_target_info(
+            src_dir: Path, dest_dir: Path,
+            src_protocol_dir="protocols", src_templates_dir="templates",
+            dest_uniprot_dir="uniprot", dest_chebi_dir="chebi",
+            force_update=False
+        ):
+    protocols = load_protocols(src_dir / src_protocol_dir)
+    templates = load_templates(src_dir / src_templates_dir)
+    tdir = dest_dir / dest_uniprot_dir
+    cdir = dest_dir / dest_chebi_dir
+    # TODO: ncRNA, unknown gene
+    for tid, tmpl in templates.items():
+        logger.info(f"Targets: {tid}")
+        _fetch_targets(tmpl, tdir, cdir, force_update)
+        for readout in tmpl["readouts"]:
+            _fetch_targets(readout, tdir, cdir, force_update)
+    for protocol in protocols:
+        logger.info(f"Targets: {protocol['protocolId']}")
+        _fetch_targets(protocol, tdir, cdir, force_update)
+        for readout in protocol["readouts"]:
+            _fetch_targets(readout, tdir, cdir, force_update)
+    logger.info("Done.")
+    return
+
+
+def process_all(
+            src_dir: Path, dest_dir: Path,
+            src_protocol_dir="protocols", src_templates_dir="templates",
+            src_attributes_dir="attributes", dest_processed_dir="processed",
+            dest_uniprot_dir="uniprot", dest_chebi_dir="chebi",
+            dest_assay_file="assays.json.gz"
+        ):
     logger.info("Loading specification files...")
-    protocols = load_protocols(src_dir / PROTOCOLS_DIR)
-    templates = load_templates(src_dir / TEMPLATES_DIR)
-    attributes = load_attributes(src_dir / ATTRIBUTES_DIR)
-
-    target_dest = dest_dir / TARGET_FILE
-    if target_dest.exists():
-        logger.info("Loading target file...")
-        with gzip.open(target_dest, "rt", encoding='UTF-8') as f:
-            target_json = json.load(f)
-        logger.info(f"Loaded: {target_dest}")
-        targets = target_json["targets"]
-        target_terms = target_json["terms"]
-    else:
-        logger.info("Target file not found. Fetching targets...")
-        targets, target_terms = fetch_target_terms(protocols, templates)
-        target_json = {
-            "meta": {
-                "created": datetime.now().isoformat(timespec="seconds")
-            },
-            "targets": targets,
-            "terms": target_terms
-        }
-        with gzip.open(target_dest, "wt", encoding='UTF-8') as f:
-            json.dump(target_json, f, indent=2)
-        logger.info(f"Saved: {target_dest}")
+    protocols = load_protocols(src_dir / src_protocol_dir)
+    templates = load_templates(src_dir / src_templates_dir)
+    attributes = load_attributes(src_dir / src_attributes_dir)
 
     logger.info("Creating a term dictionary...")
-    terms = generate_term_dict(protocols, templates, attributes)
-    terms.update(target_terms)
+    termdict = generate_term_dict(protocols, templates, attributes)
+
+    logger.info("Generating target information...")
+    targets = {}
+    for upath in sorted((dest_dir / dest_uniprot_dir).glob("*.json")):
+        with open(upath, "rt", encoding='UTF-8') as f:
+            uj = json.load(f)
+        tterms, tgdict = uniprot_go_terms(uj)
+        targets[upath.stem] = tterms
+        cterms = uniprot_chebi_terms(uj)
+        targets[upath.stem]["ChEBI"] = cterms
+        cdict = {}
+        for ct in cterms:
+            cpath = dest_dir / dest_chebi_dir / f"{ct.split(":")[1]}.json"
+            with open(cpath, "rt", encoding='UTF-8') as f:
+                cj = json.load(f)
+            cdict[ct] = chebi_name(cj)
+        termdict.update(tgdict)
+        termdict.update(cdict)
 
     logger.info("Generating assays...")
-    assays = generate_assays(protocols, templates, attributes, targets)
+    assays = generate_assays(protocols, templates, attributes)
     assay_json = {
         "meta": {
             "created": datetime.now().isoformat(timespec="seconds")
         },
         "assays": assays,
         "targets": targets,
-        "terms": terms
+        "terms": termdict
     }
-    with gzip.open(dest_dir / ASSAY_FILE, "wt", encoding='UTF-8') as f:
+    assay_dest = dest_dir / dest_processed_dir / dest_assay_file
+    with gzip.open(assay_dest, "wt", encoding='UTF-8') as f:
         json.dump(assay_json, f, indent=2)
-    logger.info(f"Saved: {dest_dir / ASSAY_FILE}")
+    logger.info(f"Saved: {assay_dest}")

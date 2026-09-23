@@ -5,20 +5,18 @@ import pickle
 
 import yaml
 
-from assay_spec_utils.datasource import uniprot_target_terms
 from assay_spec_utils.model import AssayProtocol, AssayTemplates, AssayAttributes, AssaySpec, ProtocolSpec
+
 __all__ = [
     "parse_spec",
     "parse_spec_file",
     "load_protocols",
     "load_templates",
     "load_attributes",
-    "fetch_target_terms",
     "generate_term_dict",
     "generate_protocols",
     "generate_assays"
 ]
-
 logger = logging.getLogger(__name__)
 
 ATTRIBUTE_TERM_PREFIX = "attr:"
@@ -77,32 +75,6 @@ def load_attributes(attrs_dir: Path, **kwargs) -> dict:
     return attributes
 
 
-def _fetch_targets(spec, target_term, term_dict) -> None:
-    for target in spec["targets"]:
-        tgtm, tmnm = uniprot_target_terms(target["accessionId"])
-        target_term[target["accessionId"]] = tgtm
-        term_dict.update(tmnm)
-
-
-def fetch_target_terms(protocols: list, templates: dict) -> tuple[dict, dict]:
-    """Fetch target terms from UniProt"""
-    # TODO: ncRNA, unknown gene
-    target_term = {}  # UniProtID => {GOtype => [GOterms]}
-    term_dict = {}  # GOterm => GOname
-    for tid, tmpl in templates.items():
-        logger.info(f"Template: {tid}")
-        _fetch_targets(tmpl, target_term, term_dict)
-        for readout in tmpl["readouts"]:
-            _fetch_targets(readout, target_term, term_dict)
-    for protocol in protocols:
-        logger.info(f"Protocol: {protocol['protocolId']}")
-        _fetch_targets(protocol, target_term, term_dict)
-        for readout in protocol["readouts"]:
-            _fetch_targets(readout, target_term, term_dict)
-    logger.info("Done.")
-    return target_term, term_dict
-
-
 def _update_term_dict(spec, term_dict) -> None:
     for term, name in spec["terms"]:
         term_dict[term] = name
@@ -141,10 +113,11 @@ def generate_protocols(
         protocols: list, templates: dict, attributes: dict):
     """Generate protocol metadata (for assay design statistics).
     """
+    logger.info(f"Generating protocols...")
     rcds = []
     templates_resolved = {}
     for protocol in protocols:
-        logger.info(f"Protocol: {protocol['protocolId']}")
+        logger.info(protocol['protocolId'])
         # Apply template
         tmpl_id = protocol["templateId"]
         if tmpl_id is None:
@@ -170,15 +143,15 @@ def generate_protocols(
 
 
 def generate_assays(
-        protocols: list, templates: dict,
-        attributes: dict, target_term: dict) -> list:
+        protocols: list, templates: dict, attributes: dict) -> list:
     """Generate assay metadata for each datasets.
     """
+    logger.info(f"Generating assays...")
     rcds = []
     templates_resolved = {}
     templates_readouts = {}
     for protocol in protocols:
-        logger.info(f"Protocol: {protocol['protocolId']}")
+        logger.info(protocol['protocolId'])
 
         # Apply template
         tmpl_id = protocol["templateId"]

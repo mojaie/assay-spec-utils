@@ -1,9 +1,18 @@
 
+import logging
 import pandas as pd
 from pathlib import Path
 
 import requests
 
+__all__ = [
+    "fetch_uniprot_json",
+    "fetch_chebi_json",
+    "chebi_name",
+    "uniprot_chebi_terms",
+    "uniprot_go_terms"
+]
+logger = logging.getLogger(__name__)
 
 # External resources
 
@@ -15,33 +24,51 @@ EBI_BASE_URL = "https://www.ebi.ac.uk/ols4/api/ontologies/"
 PUG_BASE_URL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/"
 
 
-def uniprot_target_terms(accession_id: str) -> tuple[dict, dict]:
+def fetch_uniprot_json(accession_id: str):
+    r = requests.get(f"{UNIPROT_BASE_URL}{accession_id}.json")
+    return r.json()
+
+
+def fetch_chebi_json(obo_id: str):
+    obo_num = obo_id.split(":")[1]
+    query = f"{EBI_BASE_URL}chebi/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FCHEBI_{obo_num}"
+    r = requests.get(query)
+    return r.json()
+
+
+def chebi_name(chebi_json: dict) -> str:
+    """e.g. CHEBI:53438
+    """
+    return chebi_json["label"]
+
+
+def uniprot_chebi_terms(uniprot_json: dict) -> tuple[dict, dict]:
     """Retrieve target GO and ChEBI terms from UniProt by accession ID
     """
-    r = requests.get(f"{UNIPROT_BASE_URL}{accession_id}.json")
-    res = r.json()
-
-    termids = {"Function": [], "Process": [], "Component": [], "ChEBI": []}
-    term_name = {}  # term ID => term name
+    terms = []
     # target reactions
-    for rcd in res["comments"]:
+    for rcd in uniprot_json["comments"]:
         if rcd["commentType"] == "CATALYTIC ACTIVITY":
             if "reactionCrossReferences" not in rcd["reaction"]:
                 continue
             for r in rcd["reaction"]["reactionCrossReferences"]:
                 if r["database"] == "ChEBI":
-                    termids["ChEBI"].append(r["id"])
-                    if r["id"] not in term_name:
-                        term_name[r["id"]] = chebi_name(r["id"])
+                    terms.append(r["id"])
         elif rcd["commentType"] == "COFACTOR":
             for r in rcd["cofactors"]:
                 cof = r["cofactorCrossReference"]
                 if cof["database"] == "ChEBI":
-                    termids["ChEBI"].append(cof["id"])
-                    if cof["id"] not in term_name:
-                        term_name[cof["id"]] = chebi_name(cof["id"])
+                    terms.append(cof["id"])
+    return terms
+
+
+def uniprot_go_terms(uniprot_json: dict) -> tuple[dict, dict]:
+    """Retrieve target GO and ChEBI terms from UniProt by accession ID
+    """
+    terms = {"Function": [], "Process": [], "Component": []}
+    term_name = {}  # term ID => term name
     # target GO terms
-    for rcd in res["uniProtKBCrossReferences"]:
+    for rcd in uniprot_json["uniProtKBCrossReferences"]:
         if rcd["database"] != "GO":
             continue
         if rcd["properties"][0]["key"] != "GoTerm":
@@ -49,19 +76,10 @@ def uniprot_target_terms(accession_id: str) -> tuple[dict, dict]:
         r = rcd["properties"][0]["value"]
         got, term = r.split(":")[:2]
         gotype = {"F": "Function", "P": "Process", "C": "Component"}[got]
-        termids[gotype].append(rcd["id"])
+        terms[gotype].append(rcd["id"])
         if rcd["id"] not in term_name:
             term_name[rcd["id"]] = " ".join(term.splitlines())
-    return termids, term_name
-
-
-def chebi_name(obo_id: str) -> str:
-    """find chebi name label by obo_id (e.g. CHEBI:53438)
-    """
-    obo_num = obo_id.split(":")[1]
-    query = f"{EBI_BASE_URL}chebi/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FCHEBI_{obo_num}"
-    res = requests.get(query).json()
-    return res["label"]
+    return terms, term_name
 
 
 def pubchem_assay(aid: str):
