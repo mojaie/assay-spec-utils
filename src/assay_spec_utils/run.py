@@ -10,6 +10,7 @@ from assay_spec_utils.datasource import *
 
 __all__ = [
     "fetch_target_info",
+    "target_terms",
     "process_all"
 ]
 logger = logging.getLogger(__name__)
@@ -65,11 +66,34 @@ def fetch_target_info(
     return
 
 
+def target_terms(
+            base_dir: Path,
+            uniprot_dir="uniprot", chebi_dir="chebi",
+        ):
+    termdict = {}
+    targets = {}
+    for upath in sorted((base_dir / uniprot_dir).glob("*.json")):
+        with open(upath, "rt", encoding='UTF-8') as f:
+            uj = json.load(f)
+        tterms, tgdict = uniprot_go_terms(uj)
+        targets[upath.stem] = tterms
+        cterms = uniprot_chebi_terms(uj)
+        targets[upath.stem]["ChEBI"] = cterms
+        cdict = {}
+        for ct in cterms:
+            cpath = base_dir / chebi_dir / f"{ct.split(":")[1]}.json"
+            with open(cpath, "rt", encoding='UTF-8') as f:
+                cj = json.load(f)
+            cdict[ct] = chebi_name(cj)
+        termdict.update(tgdict)
+        termdict.update(cdict)
+    return targets, termdict
+
+
 def process_all(
             src_dir: Path, dest_dir: Path,
             src_protocol_dir="protocols", src_templates_dir="templates",
             src_attributes_dir="attributes", dest_processed_dir="processed",
-            dest_uniprot_dir="uniprot", dest_chebi_dir="chebi",
             dest_assay_file="assays.json.gz"
         ):
     logger.info("Loading specification files...")
@@ -81,22 +105,8 @@ def process_all(
     termdict = generate_term_dict(protocols, templates, attributes)
 
     logger.info("Generating target information...")
-    targets = {}
-    for upath in sorted((dest_dir / dest_uniprot_dir).glob("*.json")):
-        with open(upath, "rt", encoding='UTF-8') as f:
-            uj = json.load(f)
-        tterms, tgdict = uniprot_go_terms(uj)
-        targets[upath.stem] = tterms
-        cterms = uniprot_chebi_terms(uj)
-        targets[upath.stem]["ChEBI"] = cterms
-        cdict = {}
-        for ct in cterms:
-            cpath = dest_dir / dest_chebi_dir / f"{ct.split(":")[1]}.json"
-            with open(cpath, "rt", encoding='UTF-8') as f:
-                cj = json.load(f)
-            cdict[ct] = chebi_name(cj)
-        termdict.update(tgdict)
-        termdict.update(cdict)
+    targets, targetdict = target_terms(dest_dir)
+    termdict.update(targetdict)
 
     logger.info("Generating assays...")
     assays = generate_assays(protocols, templates, attributes)
