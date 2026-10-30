@@ -51,7 +51,7 @@ def chebi_name(chebi_json: dict) -> str:
     return chebi_json["label"]
 
 
-def uniprot_chebi_terms(uniprot_json: dict) -> tuple[dict, dict]:
+def uniprot_chebi_terms(uniprot_json: dict) -> list[str]:
     """Retrieve target GO and ChEBI terms from UniProt by accession ID
     """
     terms = []
@@ -92,7 +92,7 @@ def uniprot_go_terms(uniprot_json: dict) -> tuple[dict, dict]:
 
 
 def pubchem_assay(aid: str):
-    query = f"{PUG_BASE_URL}/assay/aid/{aid}/concise/CSV"
+    query = f"{PUG_BASE_URL}assay/aid/{aid}/concise/CSV"
     res = _get(query).json()
     return res["label"]
 
@@ -101,6 +101,6 @@ def load_table(spec, base_dir: Path, **pd_kwargs):
     """load dataset from a local CSV file"""
     assert spec["sourceType"] == "CSV"
     df = pd.read_csv(base_dir / spec["sourcePath"], **pd_kwargs)
-    df.set_index(spec["sampleIdColumn"])
+    df = df.set_index(spec["sampleIdColumn"])
     # TODO: string to nan
-    return df[spec["column"]]
+    return df[spec["valueColumn"]]

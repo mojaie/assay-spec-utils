@@ -16,26 +16,22 @@ class TestConvertConcUnits(unittest.TestCase):
         with self.assertRaises(ValueError):
             convert_conc_units(-1, "M")
 
-    # Known bug: gl_factor is called as a function, so every unit other than
-    # molar units raises TypeError.
-
-    @unittest.expectedFailure
     def test_mass_per_volume(self):
         self.assertEqual(convert_conc_units(5, "mg/mL"), (5, "g/L"))
+        self.assertAlmostEqual(convert_conc_units(5, "ng/uL")[0], 5e-3)
 
-    @unittest.expectedFailure
     def test_ratio(self):
         self.assertAlmostEqual(convert_conc_units(0.5, "v/v%")[0], 0.005)
         self.assertEqual(convert_conc_units(0.5, "v/v%")[1], "ratio")
         self.assertEqual(convert_conc_units(200, "dilution"), (0.005, "ratio"))
         self.assertEqual(convert_conc_units(0.2, "ratio"), (0.2, "ratio"))
 
-    @unittest.expectedFailure
     def test_invalid_values(self):
         for value, unit in [(101, "v/v%"), (0.5, "dilution"), (1.5, "ratio"),
                             (1, "mol")]:
-            with self.assertRaises(ValueError):
-                convert_conc_units(value, unit)
+            with self.subTest(value=value, unit=unit):
+                with self.assertRaises(ValueError):
+                    convert_conc_units(value, unit)
 
 
 class TestConvertTimeUnits(unittest.TestCase):

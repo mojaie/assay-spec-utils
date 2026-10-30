@@ -255,20 +255,21 @@ class TestGenerateAssays(unittest.TestCase):
                 for a in assays}
         self.assertIn(("p53_Mdm2_HTRF", "dose", "ratio"), keys)
 
-    @unittest.expectedFailure
-    def test_templates_reusable_after_generate_protocols(self):
-        # Known bug: templates are resolved in place, so terms are broken
-        # when the same templates dict is reused.
+    def test_inputs_not_modified(self):
+        protocols = [_protocol()]
         templates = _templates()
-        generate_protocols(
-            [_protocol()], templates, _attributes())
-        assays = generate_assays(
-            [_protocol()], templates, _attributes())
-        self.assertEqual(
-            {(a["assayId"], a["readoutId"]): a["terms"] for a in assays},
-            {(a["assayId"], a["readoutId"]): a["terms"]
-             for a in self.assays})
+        attributes = _attributes()
+        originals = copy.deepcopy((protocols, templates, attributes))
+        generate_protocols(protocols, templates, attributes)
+        generate_assays(protocols, templates, attributes)
+        self.assertEqual((protocols, templates, attributes), originals)
 
+    def test_inputs_reusable_after_generate_protocols(self):
+        protocols = [_protocol()]
+        templates = _templates()
+        generate_protocols(protocols, templates, _attributes())
+        assays = generate_assays(protocols, templates, _attributes())
+        self.assertEqual(assays, self.assays)
 
 if __name__ == "__main__":
     unittest.main()

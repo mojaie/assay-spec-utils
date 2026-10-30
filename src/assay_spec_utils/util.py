@@ -15,7 +15,7 @@ def convert_conc_units(value: float, unit: str)-> tuple[float, str]:
     }
     if unit in mol_factor.keys():
         return (value * mol_factor[unit], "M")
-    elif unit in gl_factor():
+    elif unit in gl_factor:
         return (value * gl_factor[unit], "g/L")
     elif unit == r"v/v%":
         if value > 100 or value < 0:
@@ -33,7 +33,7 @@ def convert_conc_units(value: float, unit: str)-> tuple[float, str]:
         raise ValueError(f"invalid concentration unit notation: {unit}")
 
 
-def convert_time_units(value: float, unit: str) -> tuple[int, str]:
+def convert_time_units(value: float, unit: str) -> tuple[float, str]:
     """Convert time values to their base units (seconds).
     """
     if value < 0:

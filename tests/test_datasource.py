@@ -40,13 +40,13 @@ class TestFetch(unittest.TestCase):
             with self.assertRaises(httpx2.HTTPStatusError):
                 fetch_uniprot_json("XXXXXX")
 
-    @unittest.expectedFailure
     def test_pubchem_assay_url(self):
-        # Known bug: PUG_BASE_URL already ends with "/"
         with mock.patch("httpx2.get", side_effect=lambda url, **_:
                         _response(url, json={"label": "x"})) as get:
             datasource.pubchem_assay("862")
-        self.assertNotIn("pug//", get.call_args.args[0])
+        self.assertEqual(
+            get.call_args.args[0],
+            f"{datasource.PUG_BASE_URL}assay/aid/862/concise/CSV")
 
 
 class TestUniProtTerms(unittest.TestCase):
@@ -75,9 +75,7 @@ class TestUniProtTerms(unittest.TestCase):
 
 
 class TestLoadTable(unittest.TestCase):
-    @unittest.expectedFailure
     def test_load_table(self):
-        # Known bug: refers to spec["column"] instead of spec["valueColumn"]
         with tempfile.TemporaryDirectory() as d:
             Path(d, "a.csv").write_text("CID,value\n1,0.5\n2,1.5\n")
             spec = dict(sourceType="CSV", sourcePath="a.csv",

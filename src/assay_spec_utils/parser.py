@@ -118,13 +118,14 @@ def generate_protocols(
     templates_resolved = {}
     for protocol in protocols:
         logger.info(protocol['protocolId'])
+        protocol = pickle.loads(pickle.dumps(protocol))
         # Apply template
         tmpl_id = protocol["templateId"]
         if tmpl_id is None:
             spec = { "terms": [] }
         else:
             if tmpl_id not in templates_resolved:
-                tmpl = templates[tmpl_id]
+                tmpl = pickle.loads(pickle.dumps(templates[tmpl_id]))
                 _resolve_attributes(tmpl, attributes)
                 templates_resolved[tmpl_id] = {
                     "terms": tmpl["terms"]
@@ -152,6 +153,7 @@ def generate_assays(
     templates_readouts = {}
     for protocol in protocols:
         logger.info(protocol['protocolId'])
+        protocol = pickle.loads(pickle.dumps(protocol))
 
         # Apply template
         tmpl_id = protocol["templateId"]
@@ -164,7 +166,7 @@ def generate_assays(
             readouts = []
         else:
             if tmpl_id not in templates_resolved:
-                tmpl = templates[tmpl_id]
+                tmpl = pickle.loads(pickle.dumps(templates[tmpl_id]))
                 _resolve_attributes(tmpl, attributes)
                 templates_resolved[tmpl_id] = {
                     "targets": tmpl["targets"],
