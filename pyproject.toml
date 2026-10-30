@@ -9,10 +9,11 @@ dependencies = [
     "pydantic>=2.8.2",
     "pyyaml>=6.0.1",
     "requests>=2.32.3",
-    "pandas>=2.2.2"
+    "pandas>=2.2.2",
+    "httpx2>=2.16.0",
 ]
 readme = "README.md"
-requires-python = ">= 3.10"
+requires-python = ">= 3.14"
 
 [build-system]
 requires = ["hatchling"]

@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 from pathlib import Path
 
-import requests
+import httpx2
 
 __all__ = [
     "fetch_uniprot_json",
@@ -23,16 +23,25 @@ EBI_BASE_URL = "https://www.ebi.ac.uk/ols4/api/ontologies/"
 # PUG REST API (PubChem)
 PUG_BASE_URL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/"
 
+# httpx2 does not follow redirects and times out in 5 sec by default
+HTTP_TIMEOUT = 30.0
+
+
+def _get(url: str) -> httpx2.Response:
+    r = httpx2.get(url, follow_redirects=True, timeout=HTTP_TIMEOUT)
+    r.raise_for_status()
+    return r
+
 
 def fetch_uniprot_json(accession_id: str):
-    r = requests.get(f"{UNIPROT_BASE_URL}{accession_id}.json")
+    r = _get(f"{UNIPROT_BASE_URL}{accession_id}.json")
     return r.json()
 
 
 def fetch_chebi_json(obo_id: str):
     obo_num = obo_id.split(":")[1]
     query = f"{EBI_BASE_URL}chebi/terms/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FCHEBI_{obo_num}"
-    r = requests.get(query)
+    r = _get(query)
     return r.json()
 
 
@@ -84,7 +93,7 @@ def uniprot_go_terms(uniprot_json: dict) -> tuple[dict, dict]:
 
 def pubchem_assay(aid: str):
     query = f"{PUG_BASE_URL}/assay/aid/{aid}/concise/CSV"
-    res = requests.get(query).json()
+    res = _get(query).json()
     return res["label"]
 
 
