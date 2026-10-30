@@ -1,5 +1,3 @@
-from pathlib import Path
-import tempfile
 import unittest
 from unittest import mock
 
@@ -40,10 +38,11 @@ class TestFetch(unittest.TestCase):
             with self.assertRaises(httpx2.HTTPStatusError):
                 fetch_uniprot_json("XXXXXX")
 
-    def test_pubchem_assay_url(self):
+    def test_pubchem_assay(self):
+        csv = "AID,SID,CID,Activity Outcome\n862,1,2,Active\n"
         with mock.patch("httpx2.get", side_effect=lambda url, **_:
-                        _response(url, json={"label": "x"})) as get:
-            datasource.pubchem_assay("862")
+                        _response(url, text=csv)) as get:
+            self.assertEqual(datasource.pubchem_assay("862"), csv)
         self.assertEqual(
             get.call_args.args[0],
             f"{datasource.PUG_BASE_URL}assay/aid/862/concise/CSV")
@@ -72,16 +71,6 @@ class TestUniProtTerms(unittest.TestCase):
 
     def test_chebi_name(self):
         self.assertEqual(chebi_name({"label": "water"}), "water")
-
-
-class TestLoadTable(unittest.TestCase):
-    def test_load_table(self):
-        with tempfile.TemporaryDirectory() as d:
-            Path(d, "a.csv").write_text("CID,value\n1,0.5\n2,1.5\n")
-            spec = dict(sourceType="CSV", sourcePath="a.csv",
-                        sampleIdColumn="CID", valueColumn="value")
-            s = datasource.load_table(spec, Path(d))
-        self.assertEqual(s.to_dict(), {1: 0.5, 2: 1.5})
 
 
 if __name__ == "__main__":

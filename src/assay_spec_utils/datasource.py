@@ -1,7 +1,5 @@
 
 import logging
-import pandas as pd
-from pathlib import Path
 
 import httpx2
 
@@ -91,16 +89,8 @@ def uniprot_go_terms(uniprot_json: dict) -> tuple[dict, dict]:
     return terms, term_name
 
 
-def pubchem_assay(aid: str):
+def pubchem_assay(aid: str) -> str:
+    """Retrieve PubChem BioAssay results as CSV text (concise format)
+    """
     query = f"{PUG_BASE_URL}assay/aid/{aid}/concise/CSV"
-    res = _get(query).json()
-    return res["label"]
-
-
-def load_table(spec, base_dir: Path, **pd_kwargs):
-    """load dataset from a local CSV file"""
-    assert spec["sourceType"] == "CSV"
-    df = pd.read_csv(base_dir / spec["sourcePath"], **pd_kwargs)
-    df = df.set_index(spec["sampleIdColumn"])
-    # TODO: string to nan
-    return df[spec["valueColumn"]]
+    return _get(query).text

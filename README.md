@@ -7,7 +7,7 @@ This library is a Python utility for constructing structured, machine-readable a
 Installation
 -----------------
 
-- Requirements: Python 3.10+
+- Requirements: Python 3.14+
 
 ```sh
 pip install assay-spec-utils
@@ -23,4 +23,4 @@ License
 Copyright
 -----------------
 
-(C) 2025 Seiji Matsuoka
+(C) 2024-2026 Seiji Matsuoka
